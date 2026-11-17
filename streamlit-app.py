@@ -51,17 +51,24 @@ with tab1:
             else:
                 st.error(message)
 
+# Tab 2: Guess the hidden word
 with tab2:
-    st.write(f"Type a sentence and use {MASK} where a word is missing.")
-    sentence = st.text_area("Your sentence", f"we are about {MASK} go home.")
-    
-    if st.button("Guess the word"):
-        if sentence.count(MASK) !=1:
-            st.warning(f"Please use {MASK} exactly one time in your sentence.")
+    st.write("Enter a sentence with a missing word.")
+
+    text = st.text_input(
+        "Your sentence",
+        "I love learning about [MASK]"
+    )
+
+    if st.button("Guess missing word"):
+        if "[MASK]" not in text:
+            st.warning("Please include [MASK] in your sentence.")
         else:
-            with st.spinner("Thinking..."):
-                guesses = load_fill_mask_model()(sentence, top_k=5)
-            st.write("Top 5 guesses:")
-            for guess in guesses:
-                st.write(f"**{guess['token_str']}** (score: {round(guess['score'], 3)})")
-                st.progress(min(float(guess["score"]), 1.0))
+            with st.spinner("Guessing..."):
+                results = load_fill_mask_model()(text)
+
+            for result in results:
+                st.write(
+                    result["sequence"],
+                    round(result["score"], 3)
+                )
