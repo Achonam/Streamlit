@@ -27,7 +27,7 @@ MASK = "[MASK]"
 tab1, tab2 = st.tabs(["Sentiment", "Missing word"])
 
 with tab1:
-    st.write("Type as snetence")
+    st.write("Type as snetence and I will predict if it is POSITIVE or NEGATIVE")
     text = st.text_area("Your sentence", "I Love learning about AI")
     
     if st.button("Check sentiment"):
