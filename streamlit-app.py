@@ -3,7 +3,7 @@ import streamlit as st
 from transformers import pipeline
 
 
-st.set_page_config(page_tittle="Mely AI App")
+st.set_page_config(page_title="Mely AI App")
 st.title("DESIGNED TO GUESS WORDS AND SENTIMENTS")
 
 
@@ -44,7 +44,7 @@ with tab1:
 
 
 with tab2:
-    st.wriet(f"Type a sentence and use {MASK} where a word is missing.")
+    st.write(f"Type a sentence and use {MASK} where a word is missing.")
     sentence = st.text_area("Your sentence", f"we are about {MASK} go home.")
     
     if st.button("Guess the word"):
