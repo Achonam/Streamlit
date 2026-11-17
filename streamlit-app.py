@@ -44,9 +44,16 @@ with tab1:
 
 
 with tab2:
-    st.wriet(f"Type a Sentence")
-    text = st.text_area("Your text", "I love Learning AI")
+    st.wriet(f"Type a sentence and use {MASK} where a word is missing.")
+    sentence = st.text_area("Your sentence", f"we are about {MASK} go home.")
     
-    
-    if st.button("Predict word"):
-        if not text.strip
+    if st.button("Guess the word"):
+        if sentence.count(MASK) !=1:
+            st.warning(f"Please use {MASK} exactly one time in your sentence.")
+        else:
+            with st.spinner("Thinking..."):
+                guesses = load_fill_mask_model()(sentence, top_k=5)
+            st.write("Top 5 guesses:")
+            for guess in guesses:
+                st.write(f"**{guess['token_str']}** (score: {round(guess['score'], 3)})")
+                st.progress(min(float(guess["score"]), 1.0))
